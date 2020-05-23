@@ -1,5 +1,4 @@
 var mismo_vendedor = true;
-var global_vendedor = 0;
 $(document).ready(function () {
     mostrar_pedido();
     $("#enviar_pedido").on('submit', function (e) {
@@ -18,9 +17,9 @@ $(document).ready(function () {
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: RUTA + 'views/sistema/pedidos/php/pedidos.php',
+                    url: RUTA + 'back/pedidos',
                     dataType: "json",
-                    data: `opcion=crear&${formulario}&carrito=${carrito}&idVendedor=${global_vendedor}`,
+                    data: `opcion=crear&${formulario}&carrito=${carrito}`,
                     error: function (xhr, resp) {
                         console.log(xhr.responseText);
                     },
@@ -86,24 +85,12 @@ function verificar_vendedor() {
 }
 
 function mostrar_pedido() {
-    $("#table_carrito").html(`
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th style="width: 10%;">Cantidad</th>
-                    <th style="width: 50%;">Producto</th>
-                    <th style="width: 15%;">Precio</th>
-                    <th style="width: 15%;">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${vista_wish_list()}
-            </tbody>
-        </table>`
-    );
+    $("#table_carrito").html(vista_wish_list());
 }
 
 function vista_wish_list() {
+    let func = new Funciones();
+
     let body_wish = '';
     if (localStorage.carrito) {
         var listaCarrito = JSON.parse(localStorage.getItem("carrito"));
@@ -128,26 +115,31 @@ function vista_wish_list() {
             }
             id_vendedor = item.vendedor;
         });
-        global_vendedor = (mismo_vendedor) ? id_vendedor : 0;
-        console.log(global_vendedor);
         $("#total_productos").html(total_productos);
-        $("#total_compra").html('$ ' + number_format(total_suma, 2));
+        $("#total_compra").html('$ ' + func.number_format(total_suma, 2));
+        $("#total_envio").html('$ ' + func.number_format(total_suma + 150, 2));
     }
     return body_wish;
 }
 
 function row_wish_list(producto) {
+    let func = new Funciones();
+
     let cuerpo = '';
     let costo = parseInt(producto.costo);
     let cantidad = parseInt(producto.cantidad);
     let total = costo * cantidad;
     cuerpo = `
-    <tr>
-        <td>${cantidad}</td>
-        <td> ${producto.name}</td>
-        <td>$ ${number_format(costo, 2)}</td>
-        <td>$ ${number_format(total, 2)}</td>
-    </tr>
+    <div class="single-item">
+        <div class="single-item__thumb">
+            <img src="${producto.img}" alt="ordered item">
+        </div>
+        <div class="single-item__content">
+        ${cantidad}- <a class="ml-2"> ${producto.name}</a>
+            <span class="price">$ ${func.number_format(total, 2)}</span>
+        </div>
+    </div>
+    
     `;
     return cuerpo;
 }

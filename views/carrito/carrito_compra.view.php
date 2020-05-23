@@ -1,148 +1,187 @@
 <?php
 
-use App\Models\{Templates, Administrador};
+use App\Models\{Templates, Administrador, Clientes};
 use App\Models\{Usuarios};
 
 
 $TEMPLATES = new Templates();
 $ADMIN = new Administrador();
-$USER = new Usuarios();
+$CLIENTES = new Clientes();
 
-// $user_info = $USER->traer_info_perfil($USERSYSTEM['idUsuario'], $USERSYSTEM['giro']);
+// $user_info = $USER->buscarUsuario($USERSYSTEM['idUsuario']);
+$user_info = ($USERSYSTEM) ? $CLIENTES->mostrar_cliente($USERSYSTEM['idUsuario'], $USERSYSTEM['cargo']) : false;
 
 $TEMPLATES->TITULO =      'Completar compra  | ' . $TEMPLATES->SISTEMNAME;
 $TEMPLATES->DESCRIPCION = 'Registrar mi compra | ' . $TEMPLATES->DESCRIPCION;
 $TEMPLATES->KEYWORDS =    'Finalizar compra | ' . $TEMPLATES->KEYWORDS;
 
 $TEMPLATES->header();
-// $fecha = date('d') . ' de ' . $ADMIN->MESES((int) date('m')) . ' de ' . date('Y');
+$fecha = date('d') . ' de ' . $ADMIN->MESES((int) date('m')) . ' de ' . date('Y');
 ?>
 
 <body>
     <header class="site-navbar site-navbar-target pb-0" role="banner">
         <?php echo $TEMPLATES->navBar('carrito', $USERSYSTEM); ?>
     </header>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="callout callout-info">
-                <h5><i class="fas fa-info"></i> Nota:</h5>
-                Esta página es solamente para la confirmación de su pedido,
-                una vez procesado su encargo, será responsabilidad de la tienda o el repartidor entregar los productos.
+    <div class="checkout-wrap ptb--100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="checkout__inner">
+                        <div class="accordion-list">
+                            <div class="accordion">
+                                <div class="accordion__title">
+                                    Información de envio
+                                </div>
+                                <div class="accordion__body">
+                                    <div class="bilinfo">
+                                        <form action="#">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="single-input mt-0">
+                                                        <select name="bil-country" id="bil-country">
+                                                            <option value="select">Select your country</option>
+                                                            <option value="arb">Arab Emirates</option>
+                                                            <option value="ban">Bangladesh</option>
+                                                            <option value="ind">India</option>
+                                                            <option value="uk">United Kingdom</option>
+                                                            <option value="usa">United States</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="First name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="Last name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="Company name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="Street Address">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="Apartment/Block/House (optional)">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="City/State">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="Post code/ zip">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-input">
+                                                        <input type="email" placeholder="Email address">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="single-input">
+                                                        <input type="text" placeholder="Phone number">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="accordion__title">
+                                    Información de envio
+                                </div>
+                                <div class="accordion__body">
+                                    <div class="shipinfo">
+                                        <h3 class="shipinfo__title">Dirección de envio</h3>
+                                        <p><b>Dirección:</b> Bootexperts, Banasree D-Block, Dhaka 1219, Bangladesh</p>
+                                    </div>
+                                </div>
+                                <div class="accordion__title">
+                                    shipping method
+                                </div>
+                                <div class="accordion__body">
+                                    <div class="shipmethod">
+                                        <form action="#">
+                                            <div class="single-input">
+                                                <p>
+                                                    <input type="radio" name="ship-method" id="ship-fast">
+                                                    <label for="ship-fast">First shipping</label>
+                                                </p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid voluptatum quaerat totam hic suscipit quam repellat debitis ad sed aperiam quisquam quibusdam enim labore, ipsa illo, natus ipsam temporibus officia.</p>
+                                            </div>
+                                            <div class="single-input">
+                                                <p>
+                                                    <input type="radio" name="ship-method" id="ship-normal">
+                                                    <label for="ship-normal">Normal shipping</label>
+                                                </p>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam maxime, eaque eos! Quidem officia similique, fuga consequatur vero? Quis autem dicta voluptatibus veniam temporibus rem reprehenderit placeat quaerat sunt ducimus.</p>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="accordion__title">
+                                    payment information
+                                </div>
+                                <div class="accordion__body">
+                                    <div class="paymentinfo">
+                                        <div class="single-method">
+                                            <a href="#"><i class="zmdi zmdi-long-arrow-right"></i>Check/ Money Order</a>
+                                        </div>s
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="order-details">
+                        <h5 class="order-details__title">Tu pedido</h5>
+                        <div class="order-details__item" id="table_carrito">
+                            <div class="single-item">
+                                <div class="single-item__thumb">
+                                    <img src="images/cart/1.png" alt="ordered item">
+                                </div>
+                                <div class="single-item__content">
+                                    <a href="#">Santa fe jacket for men</a>
+                                    <span class="price">$128</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-details__count">
+                            <div class="order-details__count__single">
+                                <h5>Total productos</h5>
+                                <span class="price" id="total_productos">$909.00</span>
+                            </div>
+                            <div class="order-details__count__single">
+                                <h5>Costo total</h5>
+                                <span class="price" id="total_compra">$9.00</span>
+                            </div>
+                            <div class="order-details__count__single">
+                                <h5>Envio</h5>
+                                <span class="price">150</span>
+                            </div>
+                        </div>
+                        <div class="ordre-details__total">
+                            <h5>Order total</h5>
+                            <span class="price" id="total_envio"></span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container" style="min-width: 1000px">
-        <div class="row">
-            <div class="col-12 table-responsive">
-                <!-- Main content -->
-                <div class="invoice p-3 mb-3">
-                    <!-- title row -->
-                    <div class="row">
-                        <div class="col-12">
-                            <h4>
-                                <i class="fas fa-globe"></i> <?php echo $TEMPLATES->SISTEMNAME; ?>.
-                                <small class="float-right"><?php echo $fecha; ?></small>
-                            </h4>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- info row -->
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
-                            Para:
-                            <address>
-                                <strong><?php echo $USERSYSTEM['nombre'] . ' ' . $USERSYSTEM['apellidos']; ?></strong><br>
-                                Colonia:<?php echo $user_info['colonia']; ?><br>
-                                Dirección:<?php echo $user_info['domicilio']; ?><br>
-                                Teléfono:<?php echo $user_info['domicilio']; ?><br>
-
-                                Correo: <?php echo $USERSYSTEM['correo']; ?>
-                            </address>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 table-responsive" id="table_carrito">
-
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p class="lead">Método de pago:</p>
-                            <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                                El pago de el pedido debe de ser al recibir los productos.
-                            </p>
-                            <p id="alerta_vendedor">
-
-                            </p>
-                        </div>
-                        <div class="col-6">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th>Productos:</th>
-                                        <td id="total_productos">0</td>
-                                    </tr>
-                                    <tr>
-                                        <th style="width:50%">Total:</th>
-                                        <td id="total_compra">$0.00</td>
-                                    </tr>
-                                    <tr>s
-                                        <th>Envío:</th>
-                                        <td>Acordar con el vendedor</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </div>
-                <!-- /.invoice -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <div class="container">
-        <div class="row mb-5 pb-5">
-            <div class="col-12 table-responsive">
-                <div class="invoice p-3 mb-3">
-                    <div class="row justify-content-end pb-5">
-                        <div class="col-md-5">
-                            <h4>Selecciona la manera en la que quieres recibir tu pedido</h4>
-                            <form id="enviar_pedido">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="yo_ire" name="envio_control" value="yo" checked>
-                                    <label class="custom-control-label" for="yo_ire">Paso por el</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="envio_vendedor" name="envio_control" value="vendedor">
-                                    <label class="custom-control-label" for="envio_vendedor">Que el vendedor me lo envíe</label>
-                                </div>
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" id="trae_repartidor" name="envio_control" value="repartidor">
-                                    <label class="custom-control-label" for="trae_repartidor">Repartidor</label>
-                                </div>
-                                <div class="md-form">
-                                    <input type="text" id="comentario" name="comentario" class="form-control" maxlength="250">
-                                    <label for="comentario">Agregar comentario</label>
-
-                                </div>
-                                <button type="submit" class="btn btn-primary float-right no-print mr-2"> <i class="fas fa-receipt"></i> Realizar mi pedido </button>
-
-                            </form>
-                        </div>
-                    </div>
-                    <div class="row no-print">
-                        <div class="col-12">
-                            <a class="btn btn-default" id="print_nota"><i class="fas fa-print"></i> Imprimir</a>
-                            <a href="<?php echo $RUTA; ?>carrito" class="btn btn-warning float-right no-print"><i class="fab fa-opencart"></i> Volver</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.invoice -->
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div>
-    <?php //$TEMPLATES->footer(); 
-    ?>
+    <?php $TEMPLATES->footer(); ?>
 
     <?php $TEMPLATES->scripts(); ?>
     <script>

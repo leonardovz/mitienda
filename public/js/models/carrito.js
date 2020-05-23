@@ -1,6 +1,7 @@
 
 function add_producto() {
-    $(".addWishList").on('click', function () {
+    $(".addWishList").off().on('click', function (e) {
+        e.preventDefault();
         let button = $(this);
         let parent = button.parent();
         let message = "";
@@ -9,8 +10,6 @@ function add_producto() {
         let name = parent.attr('data-name');
         let costo = parent.attr('data-costo');
         let img = parent.attr('data-img');
-        let id_vendedor = parent.attr('data-vendedor');
-        let nombre_vendedor = parent.attr('data-vendedor-nombre');
 
         let producto = {
             "id": idProd,
@@ -18,8 +17,6 @@ function add_producto() {
             "costo": costo,
             "img": img,
             "cantidad": 1,
-            "vendedor": id_vendedor,
-            "nombre_vendedor": nombre_vendedor
         };
 
         if (localStorage.carrito) {
@@ -66,10 +63,10 @@ function add_producto() {
             showConfirmButton: false,
             timer: 1500
         });
-        button.html('<i class="fas fa-plus-circle text-white"></i>');
+        contar_productos();
+
     });
 }
-
 function producto_carrito(id) {
     let coincidir = false;
     if (localStorage.carrito) {

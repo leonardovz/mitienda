@@ -113,6 +113,7 @@ class Templates
             $headerBody .= '<link rel="stylesheet" href="' . $this->RUTA . 'library/asbab/style.css">';
             $headerBody .= '<link rel="stylesheet" href="' . $this->RUTA . 'library/asbab/css/responsive.css">';
             $headerBody .= '<link rel="stylesheet" href="' . $this->RUTA . 'library/asbab/css/custom.css">';
+            $headerBody .= '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">';
         }
         if ($this->sweetAlert) {
             $headerBody .= '<link rel="stylesheet" href="' . $this->RUTA . 'library/sweetalert2/sweetalert2.min.css">';
@@ -194,7 +195,7 @@ class Templates
                                         </div>
                                         <div class="htc__shopping__cart">
                                             <a class="" href="' . $this->RUTA . 'carrito"><i class="icon-handbag icons"></i></a>
-                                            <a href="' . $this->RUTA . 'carrito"><span class="htc__qua">2</span></a>
+                                            <a href="' . $this->RUTA . 'carrito"><span class="htc__qua" id="carrito_compras">0</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -212,8 +213,8 @@ class Templates
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="search__inner">
-                                    <form action="search" method="get">
-                                        <input name="q" placeholder="¿Qué estas buscando?" type="text">
+                                    <form action="' . $this->RUTA . 'productos" method="get">
+                                        <input name="q" placeholder="¿Qué estas buscando?" type="text" value="' . (isset($_GET['q']) ? $_GET['q'] : "") . '">
                                         <button type="submit"></button>
                                     </form>
                                     <div class="search__close__btn">
@@ -261,12 +262,12 @@ class Templates
             $scripsBody .= '<script src="' . $this->RUTA . 'library/asbab/js/owl.carousel.min.js"></script>';
 
             $scripsBody .= '<script src="' . $this->RUTA . 'library/asbab/js/main.js"></script>';
+            $scripsBody .= '<script src="' . $this->RUTA . 'js/models/contar_productos.js"></script>';
         }
         if ($this->bootstrap) {
             $scripsBody .= '<script type="text/javascript" src="' . $this->RUTA . 'library/mdbootstrap/js/popper.min.js"></script>';
             $scripsBody .= '<script type="text/javascript" src="' . $this->RUTA . 'library/mdbootstrap/js/bootstrap.min.js"></script>';
             $scripsBody .= '<script type="text/javascript" src="' . $this->RUTA . 'library/mdbootstrap/js/mdb.min.js"></script>';
-            // $scripsBody .= '<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>';
         }
         $scripsBody .= '<script>  var RUTA ="' . $this->RUTA . '";</script>';
 

@@ -1,9 +1,8 @@
 $(document).ready(function () {
 
 
-    var filtro_categoria = "";
-    var filtro_vendedor = "";
-    var filtro_busqueda = "";
+    var filtro_categoria = $("#categoria").val();
+    var filtro_busqueda = $("#search_filter").val();
     var pagina_actual = 1;
     var filtro_costo = false;
     traerCategorias();
@@ -48,7 +47,6 @@ $(document).ready(function () {
     $("#filter_price").on('click', function (e) {
         e.preventDefault();
         filtro_costo = $("#amount").val();
-        console.log(filtro_costo);
         traerProductos();
     });
 
@@ -56,10 +54,9 @@ $(document).ready(function () {
     function traerProductos() {
         let categoria = ((filtro_categoria != "") ? `&categoria=${filtro_categoria}` : "");
         let busqueda = ((filtro_busqueda != "") ? '&busqueda=' + filtro_busqueda : "");
-        let vendedor = ((filtro_vendedor != "") ? '&vendedor=' + filtro_vendedor : "");
         let actual = ((pagina_actual != "") ? '&pagina=' + pagina_actual : "");
         let precios = ((filtro_costo) ? '&filtro_costo=' + filtro_costo : "");
-        let filtros = categoria + busqueda + actual + vendedor + precios;
+        let filtros = categoria + busqueda + actual + precios;
         var contenedor = $("#container_productos");
 
         contenedor.html(`
@@ -80,17 +77,17 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta == "exito") {
                     let modelo_p = new Producto();
                     let cuerpo = "";
                     let productos = data.productos;
                     for (const i in productos) {
                         let producto = productos[i].producto;
-                        cuerpo += `<div class="col-sm-4">${modelo_p.cuerpo_producto(producto)}</div>`;
+                        cuerpo += `<div class="col-sm-4 col-xs-6">${modelo_p.cuerpo_producto(producto)}</div>`;
                     }
                     setTimeout(() => {
                         contenedor.html(cuerpo);
+                        add_producto();
                     }, 500);
                     let PG_C = new Paginacion();
                     $("#paginacion").html(PG_C.cuerpo_paginacion(pagina_actual, data.total, 'productos'));

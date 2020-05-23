@@ -4,6 +4,11 @@ namespace App\Models;
 
 class Administrador
 {
+    function MESES($dia)
+    {
+        $MES = ['', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        return $MES[$dia];
+    }
     function generarCodigo($longitud)
     {
         $key = "";

@@ -12,7 +12,6 @@ switch ($opcion) {
         $pagina  = (isset($_POST['pagina']) && !empty($_POST['pagina'])) ?  (int) $_POST['pagina'] : 0;
         $busqueda  = (isset($_POST['busqueda']) && !empty($_POST['busqueda'])) ?  $_POST['busqueda'] : false;
         $categoria  = (isset($_POST['categoria']) && !empty($_POST['categoria'])) ?  (int) $_POST['categoria'] : false;
-        $tipo  = (isset($_POST['tipo']) && !empty($_POST['tipo'])) ?  $_POST['tipo'] : false;
         $limite  = (isset($_POST['limite']) && !empty($_POST['limite'])) ?  (int) $_POST['limite'] : 12;
         $filtro_costo  = (isset($_POST['filtro_costo']) && !empty($_POST['filtro_costo'])) ?  explode("-", $_POST['filtro_costo']) : false;
 
@@ -56,17 +55,8 @@ switch ($opcion) {
             $respuesta = array(
                 'respuesta' => 'error',
                 'Texto' => 'No existen categorias',
-                $_POST
             );
         }
-        // } else {
-        //     $respuesta = array(
-        //         'respuesta' => 'error',
-        //         'Texto' => 'Es necesario que completes todos los campos',
-        //     );
-        // }
-        $respuesta['$costo_min'] = $costo_min;
-        $respuesta['$costo_max'] = $costo_max;
         $respuesta['post'] = $_POST;
         die(json_encode($respuesta));
         break;

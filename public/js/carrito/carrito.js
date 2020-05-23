@@ -8,6 +8,7 @@ function mostrarWish() {
 }
 
 function vista_wish_list() {
+    let func = new Funciones();
     let body_wish = '';
     if (localStorage.carrito) {
         var listaCarrito = JSON.parse(localStorage.getItem("carrito"));
@@ -22,51 +23,56 @@ function vista_wish_list() {
             body_wish += row_wish_list(item);
         });
         $("#total_productos").html(total_productos);
-        $("#total_compra").html('$ ' + number_format(total_suma, 2));
+        $("#total_compra").html('$ ' + func.number_format(total_suma, 2));
     }
     return body_wish;
 }
 
 function row_wish_list(producto) {
+    let func = new Funciones();
+
     let cuerpo = '';
     let costo = parseInt(producto.costo);
     let cantidad = parseInt(producto.cantidad);
     let total = costo * cantidad;
     cuerpo = `
-        <div class="row ">
-            <div class="card my-2 w-100">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2 col-2-1 col-3 p-0"><img src="${RUTA}documents/Galery/productos/${producto.img}" alt="" class="img-fluid w-100" style="max-width: 100px"></div>
-                        <div class="col">
-                            <h5>
-                                ${producto.name}
-                            </h5>
-                            <hr>
-                            <p class="text-muted">
-                                <b class="h5 text-muted">
-                                    ${cantidad}
-                                </b>
-                                Unidad${cantidad > 1 ? "es" : ""}
-                            </p>
-                            <p class="text-right">
-                                <div class="btn-group radio-group ml-2" data-id="${producto.id}" data-cantidad="${producto.cantidad}">
-                                    <a class="stylish-color btn-sm  text-white mx-1  action_wish" data-action="remove"> <i class="fas fa-minus-circle"></i> </a>
-                                    <a class="stylish-color btn-sm  text-white mx-1  action_wish" data-action="add"><i class="fas fa-plus-circle"></i></a>
-                                    <a class="stylish-color btn-sm  text-white mx-1  action_wish" data-action="delete"><i class="fas fa-trash-alt"></i></a>
-                                </div>
-                            </p>
-                            <p class="h5 text-right">$ ${number_format(total, 2)}</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card my-2 w-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2 col-xs-3" style="padding: 10px 0 0 10px;"><img src="${producto.img}" alt="" class="img-fluid w-100" style="width: 100%; max-width: 100px"></div>
+                            <div class="col-md-10 col-xs-9 " style="padding: 0 30px 0 10px;">
+                                <h5>${producto.name}</h5>
+                                <p class="text-muted">
+                                    <b class="h5 text-muted">
+                                        ${cantidad}
+                                    </b>
+                                    Unidad${cantidad > 1 ? "es" : ""}
+                                </p>
+                                <p class="text-right">
+                                    <div class="btn-group radio-group ml-2" data-id="${producto.id}" data-cantidad="${producto.cantidad}">
+                                        <a href="" class="action_wish" style="margin:10px 10px;" data-action="remove"> <i class="fas fa-minus-circle"></i> </a>
+                                        <a href="" class="action_wish" style="margin:10px 10px;" data-action="add"><i class="fas fa-plus-circle"></i></a>
+                                        <a href="" class="action_wish" style="margin:10px 10px;" data-action="delete"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                </p>
+                                <p class="h5 text-right">$ ${func.number_format(total, 2)}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <hr>
+
     `;
     return cuerpo;
 }
 function action_wish() {
-    $(".action_wish").on('click', function () {
+    $(".action_wish").on('click', function (e) {
+        e.preventDefault();
+
         let button = $(this);
         let action = button.attr('data-action');
         let id = parseInt(button.parent().attr('data-id'));
@@ -80,6 +86,7 @@ function action_wish() {
         } else if (action == "delete") {
             actualizar_cantidad(id, 0);
         }
+        contar_productos();
     });
 }
 

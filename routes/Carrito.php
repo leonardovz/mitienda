@@ -5,11 +5,7 @@ if ($LT < 4) {
         require_once '../views/carrito/carrito.view.php';
     } else if ($LT == 2 && $DIRECTORIO[1] == "comprar") {
         if ($USERSYSTEM) {
-            if ($USERSYSTEM['perfil_completo']) {
-                require_once '../views/carrito/carrito_compra.view.php';
-            } else {
-                require_once("../views/errors/no_info.php");
-            }
+            require_once '../views/carrito/carrito_compra.view.php';
         } else {
             require_once("../views/errors/no_login.php");
         }

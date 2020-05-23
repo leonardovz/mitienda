@@ -133,6 +133,7 @@ $TEMPLATE->header();
 
     <?php $TEMPLATE->scripts(); ?>
     <script src="<?php echo $RUTA; ?>js/models/funciones.js"></script>
+    <script src="<?php echo $RUTA; ?>js/models/carrito.js"></script>
     <script src="<?php echo $RUTA; ?>js/models/productos.js"></script>
     <script src="<?php echo $RUTA; ?>js/index/productos.js"></script>
 </body>

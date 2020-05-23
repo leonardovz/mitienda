@@ -19,12 +19,15 @@ $TEMPLATES->header();
     <div class="container z-depth-1 pt-5 my-5 ">
         <section>
             <div class="row">
-                <div class="col mb-4 text-white">
+
+                <div class="col-md-12 mb-4 text-white">
+                    <br>
                     <h3><?php echo $TEMPLATES->SISTEMNAME ?> Carrito de compras </h3>
+                    <br>
                 </div>
             </div>
             <div class="row">
-                <div class="col" id="cont_wish_list">
+                <div class="col-md-12" id="cont_wish_list">
 
                 </div>
             </div>

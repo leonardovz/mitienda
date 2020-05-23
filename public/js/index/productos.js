@@ -21,18 +21,17 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta == "exito") {
                     let modelo_p = new Producto();
                     let cuerpo = "";
                     let productos = data.productos;
                     for (const i in productos) {
                         let producto = productos[i].producto;
-                        console.log(producto);
-                        cuerpo += `<div class="col-md-4 col-lg-3 col-sm-4 col-xs-12">${modelo_p.cuerpo_producto(producto)}</div>`;
+                        cuerpo += `<div class="col-sm-4 col-xs-6">${modelo_p.cuerpo_producto(producto)}</div>`;
                     }
                     setTimeout(() => {
                         contenedor.html(cuerpo);
+                        add_producto();
                         // add_producto();
                     }, 500);
                     // let PG = new Paginacion();
@@ -68,14 +67,12 @@ $(document).ready(function () {
                 console.log(xhr.responseText);
             },
             success: function (data) {
-                console.log(data);
                 if (data.respuesta == "exito") {
                     let modelo_p = new Producto();
                     let cuerpo = "";
                     let productos = data.productos;
                     for (const i in productos) {
                         let producto = productos[i].producto;
-                        console.log(producto);
                         cuerpo += `<div class="col-md-4 col-lg-3 col-sm-4 col-xs-12">${modelo_p.cuerpo_producto(producto)}</div>`;
                     }
                     setTimeout(() => {

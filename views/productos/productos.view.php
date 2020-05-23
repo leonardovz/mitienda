@@ -35,27 +35,7 @@ $TEMPLATE->header();
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9 col-lg-push-3 col-md-9 col-md-push-3 col-sm-12 col-xs-12">
-                        <div class="htc__product__rightidebar">
-                            <div class="htc__grid__top">
-                                <div class="htc__select__option">
-                                    <select class="ht__select">
-                                        <option>Default softing</option>
-                                        <option>Sort by popularity</option>
-                                        <option>Sort by average rating</option>
-                                        <option>Sort by newness</option>
-                                    </select>
-                                    <select class="ht__select">
-                                        <option>Show by</option>
-                                        <option>Sort by popularity</option>
-                                        <option>Sort by average rating</option>
-                                        <option>Sort by newness</option>
-                                    </select>
-                                </div>
-                                <div class="ht__pro__qun">
-                                    <span>Showing 1-12 of 1033 products</span>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="htc__product__container">
                             <div class="row">
                                 <div class="product__list clearfix mt--30" id="container_productos">
@@ -72,7 +52,7 @@ $TEMPLATE->header();
                         <div class="htc__product__leftsidebar">
                             <!-- Start Prize Range -->
                             <div class="htc-grid-range">
-                                <h4 class="title__line--4">Price</h4>
+                                <h4 class="title__line--4">Precio</h4>
                                 <div class="content-shopby">
                                     <div class="price_filter s-filter clear">
                                         <form id="filtrar_costo" action="" method="GET">
@@ -80,7 +60,9 @@ $TEMPLATE->header();
                                             <div class="slider__range--output">
                                                 <div class="price__output--wrap">
                                                     <div class="price--output">
-                                                        <span>Price :</span><input type="text" id="amount" name="filtro_precio" readonly>
+                                                        <input type="hidden" id="search_filter" value="<?php echo (isset($_GET['q']) ? $_GET['q'] : ""); ?>">
+                                                        <input type="hidden" id="categoria" value="<?php echo (isset($_GET['categoria']) ? $_GET['categoria'] : ""); ?>">
+                                                        <span>Precio :</span><input type="text" id="amount" name="filtro_precio" readonly>
                                                     </div>
                                                     <div class="price--filter">
                                                         <a href="#" id="filter_price">Filtrar</a>
@@ -110,6 +92,7 @@ $TEMPLATE->header();
 
     <?php $TEMPLATE->scripts(); ?>
     <script src="<?php echo $RUTA; ?>js/models/funciones.js"></script>
+    <script src="<?php echo $RUTA; ?>js/models/carrito.js"></script>
     <script src="<?php echo $RUTA; ?>js/models/productos.js"></script>
     <script src="<?php echo $RUTA; ?>js/models/paginacion.js"></script>
     <script src="<?php echo $RUTA; ?>js/index/productos/productos.js"></script>
