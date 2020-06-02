@@ -20,9 +20,9 @@ $TEMPLATES->header();
         <section>
             <div class="row">
 
-                <div class="col-md-12 mb-4 text-white">
+                <div class="col-md-12 mb-4 text-center">
                     <br>
-                    <h3><?php echo $TEMPLATES->SISTEMNAME ?> Carrito de compras </h3>
+                    <h2> Carrito de compras </h2>
                     <br>
                 </div>
             </div>
@@ -33,11 +33,11 @@ $TEMPLATES->header();
             </div>
             <hr class="bg-white ">
             <div class="row py-3 bg-white">
-                <div class="col-12 text-right">
+                <div class="col-md-12 text-right">
                     <p class="h6"><span>Productos</span> <strong id="total_productos">0</strong></p>
                     <p class="h4"><span>Total</span> <strong id="total_compra">$ 0.00</strong></p>
                 </div>
-                <div class=" col-12">
+                <div class=" col-md-12">
                     <a href="<?php echo $RUTA; ?>carrito/comprar" class="btn btn-primary btn-rounded px-4">Completar pedido
                         <i class="fas fa-angle-right right"></i>
                     </a>

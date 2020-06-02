@@ -4,6 +4,7 @@ use App\Models\Templates;
 use App\Models\Usuarios;
 
 $TEMPLATES = new Templates();
+$TEMPLATES->USERSYSTEM = $USERSYSTEM;
 $USER = new Usuarios();
 
 $USER->id = $idUsuario;

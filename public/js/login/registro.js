@@ -11,7 +11,7 @@ $(document).ready(() => {
             var formulario = $(this).serialize();
             $.ajax({
                 type: 'POST',
-                url: RUTA + 'views/login/php/login.php',
+                url: RUTA + 'back/registro',
                 data: 'opcion=registro&' + formulario,
                 dataType: 'json',
                 error: function (xhr, status) {
@@ -24,17 +24,13 @@ $(document).ready(() => {
                     }, 1000);
                 },
                 success: function (data) {
+                    console.log(data);
                     if (data.respuesta == 'exito') {
                         Swal.fire('¡Exito!', data.Texto, 'success');
                         setTimeout(() => {
                             location.href = RUTA + 'verificar';
-                        }, 1500);
+                        }, 3000);
                     } else {
-                        var posicion = $("#apellido").offset().top;
-                        $("#errores").html(`<div class="alert alert-primary" role="alert"> ${data.Texto} </div>`);
-                        $("html, body").animate({
-                            scrollTop: posicion
-                        }, 2000);
                         Swal.fire('¡Error!', data.Texto, 'error');
                     }
                     setTimeout(() => {

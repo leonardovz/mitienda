@@ -26,7 +26,7 @@ $TEMPLATES->header();
                 <!--Grid column-->
                 <div class="col-md-6 mb-4">
 
-                    <img src="<?php echo $RUTA; ?>galeria/sistema/images/SnSanFranciscoCF.png" class="img-fluid z-depth-1-half" alt="">
+                    <img src="<?php echo $RUTA; ?>galeria/bg/shopping.jpg" class="img-fluid z-depth-1-half" alt="">
 
                 </div>
                 <div class="col-md-6 mb-4 text-justify">
@@ -48,10 +48,10 @@ $TEMPLATES->header();
                     </p>
 
                     <!-- CTA -->
-                    <a href="<?php echo $RUTA; ?>registro" class="btn btn-indigo btn-md">Registrarme
+                    <a href="<?php echo $RUTA; ?>registro" class="btn btn-info ">Registrarme
                         <i class="fas fa-users-cog mx-3"></i>
                     </a>
-                    <a href="<?php echo $RUTA; ?>login" class="btn btn-indigo btn-md">Iniciar Sesión
+                    <a href="<?php echo $RUTA; ?>login" class="btn btn-primary ">Iniciar Sesión
                         <i class="fas fa-sign-in-alt mx-3"></i>
                     </a>
 

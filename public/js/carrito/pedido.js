@@ -1,6 +1,6 @@
 var mismo_vendedor = true;
 $(document).ready(function () {
-    mostrar_pedido();
+    verificar_carrito(localStorage.getItem("carrito"));
     $("#enviar_pedido").on('submit', function (e) {
         e.preventDefault();
         let formulario = $(this).serialize();
@@ -71,32 +71,15 @@ $(document).ready(function () {
     });
 });
 
-function verificar_vendedor() {
-    $("#alerta_vendedor").html(`
-            <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Oye amig@!</h4>
-                <p>
-                    Al paraecer tus productos son de diferentes vendedores, el unico tipo de envio que puedes tener es por parte de un repartidor.<br>
-                    Para pedir tus productos o recerbarlos es necesario que modifiques tu carrito
-                </p>
-                <hr>
-                <a href="${RUTA}carrito" class="mb-0">Modificar mi carrito.</a>
-            </div>`);
-}
-
-function mostrar_pedido() {
-    $("#table_carrito").html(vista_wish_list());
-}
-
-function vista_wish_list() {
+function vista_wish_list(listaCarrito) {
+    console.log(listaCarrito);
     let func = new Funciones();
 
     let body_wish = '';
-    if (localStorage.carrito) {
-        var listaCarrito = JSON.parse(localStorage.getItem("carrito"));
+    if (listaCarrito) {
         let total_suma = 0;
         let total_productos = 0;
-        let id_vendedor = false;
+        let no_compra = false;
         listaCarrito.forEach(function (item, index) {//Revisa que existan coincidencias
             let costo = parseInt(item.costo);
             let cantidad = parseInt(item.cantidad);
@@ -104,17 +87,16 @@ function vista_wish_list() {
             total_productos += cantidad
             total_suma += total;
             body_wish += row_wish_list(item);
-            if (id_vendedor) {
-                if (id_vendedor != item.vendedor) {
-                    mismo_vendedor = false;
-                    $("#yo_ire").attr('disabled', 'disabled').removeAttr('checked');
-                    $("#envio_vendedor").attr('disabled', 'disabled');
-                    $("#trae_repartidor").attr('checked', 'checked');
-                    verificar_vendedor();
-                }
-            }
-            id_vendedor = item.vendedor;
+            no_compra = (!item.comprar) ? true : no_compra;
         });
+        if (no_compra) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Udted tiene un producto en su carrito que no puede ser comprado, corrija el carrito y continue con su compra',
+                footer: `<a href="${RUTA}carrito">Corregir</a>`
+            });
+        }
         $("#total_productos").html(total_productos);
         $("#total_compra").html('$ ' + func.number_format(total_suma, 2));
         $("#total_envio").html('$ ' + func.number_format(total_suma + 150, 2));
@@ -130,7 +112,7 @@ function row_wish_list(producto) {
     let cantidad = parseInt(producto.cantidad);
     let total = costo * cantidad;
     cuerpo = `
-    <div class="single-item">
+    <div class="single-item p-0">
         <div class="single-item__thumb">
             <img src="${producto.img}" alt="ordered item">
         </div>
@@ -144,3 +126,24 @@ function row_wish_list(producto) {
     return cuerpo;
 }
 
+function verificar_carrito(carrito) {
+    $.ajax({
+        type: "POST",
+        url: RUTA + 'back/carrito',
+        dataType: "json",
+        data: `opcion=comprobar_productos_carrito&carrito=${carrito}`,
+        error: function (xhr, resp) {
+            console.log(xhr.responseText);
+        },
+        success: function (data) {
+            console.log(data);
+            if (data.respuesta == 'exito') {
+                $("#table_carrito").html(vista_wish_list(data.carrito));
+                localStorage.setItem("carrito", JSON.stringify(data.carrito));
+            } else {
+                Swal.fire('Opss', data.Texto, 'error');
+                localStorage.removeItem('carrito');
+            }
+        }
+    });
+}

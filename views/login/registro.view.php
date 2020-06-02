@@ -9,28 +9,29 @@ $TEMPLATES->recaptcha = true;
 $TEMPLATES->header();
 ?>
 
-
-<body>
+<body class="h-100">
     <!-- Main navigation -->
     <header>
         <!--Navbar-->
         <?php $TEMPLATES->navBar('', $USERSYSTEM); ?>
     </header>
-    <div class="container-fluid "><br>
+    <div class="container-fluid h-100 container_principal"><br>
         <div class="row py-0">
             <div class="col-md-4 bg-dark text-white py-5 text-md-right ">
                 <div class="row">
-                    <div class="col pr-md-5 pr-2">
+                    <div class="col-md-12 pr-md-5 pr-2">
                         <h3 class="h1 font-weight-lighter text-white my-md-5 my-2 ">Registro</h3>
                     </div>
                     <div class="col-md-12 col-4">
                         <img src="<?php echo $RUTA; ?>galeria/sistema/logo/logo_v3_white" class="w-50 rounded-circle" alt="">
                     </div>
-
                 </div>
             </div>
             <div class="col-md-8 bg-white py-md-5 py-2">
                 <div class="card">
+                    <br>
+                    <br>
+                    <br>
                     <div class="card-body">
                         <form id="formRegistro" method="post">
                             <div class="row">
@@ -42,22 +43,16 @@ $TEMPLATES->header();
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="md-form">
-                                        <input type="text" id="apellido" name="apellido" class="form-control">
+                                        <input type="text" id="apellidos" name="apellidos" class="form-control">
                                         <label for="apellido" class="font-weight-light">Apellidos</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
                                     <div class="md-form">
                                         <input type="email" id="email" name="email" class="form-control">
-                                        <label for="email" class="font-weight-light">Email</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="md-form">
-                                        <input type="email" id="emailR" name="emailR" class="form-control">
-                                        <label for="emailR" class="font-weight-light">Confirmación de email</label>
+                                        <label for="email" class="font-weight-light">Correo</label>
                                     </div>
                                 </div>
                             </div>
@@ -70,8 +65,8 @@ $TEMPLATES->header();
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="md-form">
-                                        <input type="password" name="passwordR" id="passwordR" class="form-control">
-                                        <label for="passwordR" class="font-weight-light">Repite la contraseña</label>
+                                        <input type="password" name="password_r" id="passwordR" class="form-control">
+                                        <label for="password_r" class="font-weight-light">Repite la contraseña</label>
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +77,7 @@ $TEMPLATES->header();
                                 </div>
                             </div>
                             <div class="col-md-12 p-0 mb-2">
-                                <div class="g-recaptcha" data-sitekey="<?php echo $TEMPLATES->keyCaptcha_public; ?>"></div>
+                                <!-- <div class="g-recaptcha" data-sitekey="<?php echo $TEMPLATES->key_recaptcha; ?>"></div> -->
                             </div>
 
                             <div class="text-center py-md-4 py-2 mt-3">
@@ -106,7 +101,7 @@ $TEMPLATES->header();
     <!-- Footer -->
     <?php $TEMPLATES->footer(); ?>
     <?php $TEMPLATES->scripts(); ?>
-    <script src="<?php echo $RUTA; ?>views/login/script/registro.js"></script>
+    <script src="<?php echo $RUTA; ?>js/login/registro.js"></script>
 </body>
 
 </html>

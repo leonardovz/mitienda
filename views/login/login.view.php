@@ -14,7 +14,7 @@ $TEMPLATES->header();
         <!--Navbar-->
         <?php $TEMPLATES->navBar('', $USERSYSTEM); ?>
     </header>
-    <div class="container-fluid"><br>
+    <div class="container-fluid container_principal"><br>
         <div class="row py-0">
             <div class="col-md-12 bg-dark text-white py-5 text-md-right ">
                 <div class="row">
@@ -22,13 +22,8 @@ $TEMPLATES->header();
                     </div>
                     <div class="col-md-6 text-center">
                         <h3 class="h1 font-weight-lighter text-white my-md-5 my-2 ">Inicio de sesión</h3>
-
-                        <!-- Material form login -->
                         <div class="card">
-                            <!--Card content-->
                             <div class="card-body px-lg-5 pt-5">
-
-                                <!-- Form -->
                                 <form id="formLogin" class="text-center " style="color: #757575;" action="<?php echo $RUTA; ?>perfil">
 
                                     <!-- Email -->
@@ -65,6 +60,9 @@ $TEMPLATES->header();
     <!-- Footer -->
     <?php $TEMPLATES->footer(); ?>
     <?php $TEMPLATES->scripts(); ?>
+    <script>
+        <?php echo "var login  = " . ($_log_admin ? '"administrador"' : '""') . ";"; ?>
+    </script>
     <script src="<?php echo $RUTA; ?>js/login/login.js"></script>
 </body>
 

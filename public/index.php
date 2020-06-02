@@ -58,9 +58,12 @@ else if ($DIRECTORIO[0] == "login" || $DIRECTORIO[0] == "registro" || $DIRECTORI
  */
 else if ($DIRECTORIO[0] == "sistema") {
 
-    if ($USERSYSTEM) {
+    if ($USERSYSTEM && $USERSYSTEM['cargo'] != 'cliente') {
         require_once '../routes/Sistema.php';
+    } else if ($USERSYSTEM && $USERSYSTEM['cargo'] == 'cliente') {
+        require_once '../routes/Clientes.php';
     } else {
+        session_reset();
         header('Location:' . $RUTA . 'login');
     }
 }

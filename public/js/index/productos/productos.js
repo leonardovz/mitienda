@@ -34,7 +34,7 @@ $(document).ready(function () {
                     let categorias = data.categorias;
                     for (const i in categorias) {
                         let categoria = categorias[i].categoria;
-                        cuerpo += `<li class="filter-list"><a href="?categoria=${categoria.id}">${categoria.categoria}<span>(${categorias[i].total_productos})</span></a></li>`;
+                        cuerpo += `<li class="filter-list"><a href="?q=${categoria.categoria}">${categoria.categoria}<span>(${categorias[i].total_productos})</span></a></li>`;
                     }
                     contenedor.html(cuerpo);
                 } else {

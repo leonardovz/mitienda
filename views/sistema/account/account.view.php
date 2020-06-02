@@ -3,6 +3,7 @@
 use App\Models\Templates;
 
 $TEMPLATES = new Templates();
+$TEMPLATES->USERSYSTEM = $USERSYSTEM;
 
 $TEMPLATES->asbab = false;
 $TEMPLATES->bootstrap = true;

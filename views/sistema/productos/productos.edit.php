@@ -6,6 +6,7 @@ use App\Models\Productos;
 
 $TEMPLATES = new Templates();
 $PRODUCTOS = new Productos();
+$TEMPLATES->USERSYSTEM = $USERSYSTEM;
 
 $PRODUCTOS->id = $idProducto;
 

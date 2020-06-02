@@ -3,6 +3,7 @@
 use App\Models\Templates;
 
 $TEMPLATES = new Templates();
+$TEMPLATES->USERSYSTEM = $USERSYSTEM;
 
 // $TEMPLATES->NOXEN = true;
 $TEMPLATES->adminLTE = true;

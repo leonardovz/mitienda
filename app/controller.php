@@ -30,6 +30,7 @@ include_once('librerias/PHPMailer/src/PHPMailer.php');
 include_once('librerias/PHPMailer/src/Exception.php');
 include_once('librerias/PHPMailer/src/SMTP.php');
 include_once('librerias/FPDF/fpdf.php');
+include_once('librerias/vendor/autoload.php');
 
 
 /**

@@ -30,6 +30,9 @@ class Templates
     var $cropper = false;
     var $CERRAR_SESSION =  false;
     var $recaptcha =  false;
+    var $key_recaptcha =  '';
+
+    var $USERSYSTEM = false;
 
 
     /*****
@@ -55,6 +58,8 @@ class Templates
         $this->KEYWORDS = "";
         $this->IMG_SISTEMA = $this->RUTA . 'galeria/img/logo.png';
         $this->IMG_LOGOS = $this->RUTA . 'galeria/img/absolute.png';
+
+        $this->key_recaptcha = $CONFIG->public_captcha;
     }
 
     function header()
@@ -95,16 +100,15 @@ class Templates
          * LIBRERIAS
          */
         if ($this->bootstrap) {
-            $headerBody .=
-                '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">'
-                . '<link rel="stylesheet" href="' . $this->RUTA . 'library/mdbootstrap/css/bootstrap.min.css">'
-                . '<link rel="stylesheet" href="' . $this->RUTA . 'library/mdbootstrap/css/mdb.min.css">'
-                // . '<link rel="stylesheet" href="' . $this->RUTA . 'library/mdbootstrap/css/style.css">'
-                . '<script type="text/javascript" src="' . $this->RUTA . 'library/mdbootstrap/js/jquery.min.js"></script>';
-            $headerBody .=
-                '<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">' .
-                '<link rel="stylesheet" href="' . $this->RUTA . 'library/AdminLTE/dist/css/adminlte.min.css">' .
-                '<script type="text/javascript" src="' . $this->RUTA . 'library/AdminLTE/dist/js/adminlte.js"></script>';
+
+            $headerBody .= '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">';
+            $headerBody .=    '<link rel="stylesheet" href="' . $this->RUTA . 'library/mdbootstrap/css/bootstrap.min.css">';
+            $headerBody .=    '<link rel="stylesheet" href="' . $this->RUTA . 'library/mdbootstrap/css/mdb.min.css">';
+            // $headerBody .=  '<link rel="stylesheet" href="' . $this->RUTA . 'library/mdbootstrap/css/style.css">'
+            $headerBody .=  '<script type="text/javascript" src="' . $this->RUTA . 'library/mdbootstrap/js/jquery.min.js"></script>';
+            $headerBody .= '<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">';
+            $headerBody .= '<link rel="stylesheet" href="' . $this->RUTA . 'library/AdminLTE/dist/css/adminlte.min.css">';
+            $headerBody .= '<script type="text/javascript" src="' . $this->RUTA . 'library/AdminLTE/dist/js/adminlte.js"></script>';
         }
         if ($this->asbab) {
             $headerBody .= '<link rel="stylesheet" href="' . $this->RUTA . 'library/asbab/css/bootstrap.min.css">';
@@ -136,7 +140,7 @@ class Templates
 
         echo $headerBody;
     }
-    function navBar($navActive = '', $USERSYSTEM = false)
+    function navBar($navActive = '')
     {
         $navBarBody = '
             <header id="htc__header" class="htc__header__area header--one">
@@ -158,21 +162,22 @@ class Templates
                                                 <ul class="dropdown mega_dropdown">
                                                     <li><a class="mega__title" href="' . $this->RUTA . 'productos?sexo=man">Hombre</a>
                                                         <ul class="mega__item">
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=pantalon">Pantalones</a></li>
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=zapato">Zapatos vestir</a></li>
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=tenis">Zapatos tenis</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=pantalon">Pantalones</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=zapato">Zapatos vestir</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=tenis">Zapatos tenis</a></li>
                                                         </ul>
                                                     </li>
                                                     <li><a class="mega__title" href="' . $this->RUTA . 'productos?sexo=woman">Mujer</a>
                                                         <ul class="mega__item">
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=pantalon">Falda</a></li>
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=pantalon">Vestidos</a></li>
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=pantalon">Pantalón</a></li>
-                                                            <li><a href="' . $this->RUTA . 'productos?sexo=man&tipo=pantalon">Tacón</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=falda">Falda</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=vestido">Vestidos</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=pantalon">Pantalón</a></li>
+                                                            <li><a href="' . $this->RUTA . 'productos/?q=tacon">Tacón</a></li>
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li>' . ($this->USERSYSTEM ? '<li class="drop "><a  class="text-info" href="' . $this->RUTA . '" id="cerrarSesion"> <i class="fas fa-sign-out-alt text-info"></i> Salir</a></li>' : '') . '
+
                                         </ul>
                                     </nav>
 
@@ -271,7 +276,7 @@ class Templates
         }
         $scripsBody .= '<script>  var RUTA ="' . $this->RUTA . '";</script>';
 
-        if ($this->CERRAR_SESSION) {
+        if ($this->USERSYSTEM) {
             $scripsBody .= '<script src="' . $this->RUTA . 'js/login/cerrarSesion.js"></script>';
         }
         echo $scripsBody;

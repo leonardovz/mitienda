@@ -5,7 +5,7 @@ $(document).ready(function () {
         let $password = $("#password").val();
         let $button = $("#btnLogin");
         let formulario = $(this).serialize();
-        let tipo = 'al';
+        let tipo = login;
         if ($correo != "" && $correo.length > 5) {
             var expresionMail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
             var expresion = /^[a-zA-Z0-9#%@.-]*$/;
@@ -31,7 +31,7 @@ $(document).ready(function () {
                     type: "POST",
                     url: RUTA + 'back/login',
                     dataType: "json",
-                    data: `opcion=login&${formulario}&tipo${tipo}`,
+                    data: `opcion=login&${formulario}&tipo=${tipo}`,
                     error: function (xhr, resp) {
                         console.log(xhr.responseText);
                         setTimeout(() => {

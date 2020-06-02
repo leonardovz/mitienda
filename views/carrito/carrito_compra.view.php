@@ -1,14 +1,12 @@
 <?php
 
 use App\Models\{Templates, Administrador, Clientes};
-use App\Models\{Usuarios};
 
 
 $TEMPLATES = new Templates();
 $ADMIN = new Administrador();
 $CLIENTES = new Clientes();
 
-// $user_info = $USER->buscarUsuario($USERSYSTEM['idUsuario']);
 $user_info = ($USERSYSTEM) ? $CLIENTES->mostrar_cliente($USERSYSTEM['idUsuario'], $USERSYSTEM['cargo']) : false;
 
 $TEMPLATES->TITULO =      'Completar compra  | ' . $TEMPLATES->SISTEMNAME;
@@ -99,45 +97,29 @@ $fecha = date('d') . ' de ' . $ADMIN->MESES((int) date('m')) . ' de ' . date('Y'
                                     </div>
                                 </div>
                                 <div class="accordion__title">
-                                    Información de envio
-                                </div>
-                                <div class="accordion__body">
-                                    <div class="shipinfo">
-                                        <h3 class="shipinfo__title">Dirección de envio</h3>
-                                        <p><b>Dirección:</b> Bootexperts, Banasree D-Block, Dhaka 1219, Bangladesh</p>
-                                    </div>
-                                </div>
-                                <div class="accordion__title">
-                                    shipping method
-                                </div>
-                                <div class="accordion__body">
-                                    <div class="shipmethod">
-                                        <form action="#">
-                                            <div class="single-input">
-                                                <p>
-                                                    <input type="radio" name="ship-method" id="ship-fast">
-                                                    <label for="ship-fast">First shipping</label>
-                                                </p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid voluptatum quaerat totam hic suscipit quam repellat debitis ad sed aperiam quisquam quibusdam enim labore, ipsa illo, natus ipsam temporibus officia.</p>
-                                            </div>
-                                            <div class="single-input">
-                                                <p>
-                                                    <input type="radio" name="ship-method" id="ship-normal">
-                                                    <label for="ship-normal">Normal shipping</label>
-                                                </p>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam maxime, eaque eos! Quidem officia similique, fuga consequatur vero? Quis autem dicta voluptatibus veniam temporibus rem reprehenderit placeat quaerat sunt ducimus.</p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="accordion__title">
-                                    payment information
+                                    Metodo de pago
                                 </div>
                                 <div class="accordion__body">
                                     <div class="paymentinfo">
                                         <div class="single-method">
-                                            <a href="#"><i class="zmdi zmdi-long-arrow-right"></i>Check/ Money Order</a>
-                                        </div>s
+                                            <?php
+                                            MercadoPago\SDK::setAccessToken('TEST-3296678210453498-052323-a6632f22bb2b15ddc2f8841c4b1ccdd2-208604661');
+
+                                            // Crea un objeto de preferencia
+                                            $preference = new MercadoPago\Preference();
+
+                                            // Crea un ítem en la preferencia
+                                            $item = new MercadoPago\Item();
+                                            $item->title = 'Pago: ticket: 50452F12DD';
+                                            $item->quantity = 1;
+                                            $item->unit_price = 52.00;
+                                            $preference->items = array($item);
+                                            $preference->save(); ?>
+                                            <form action="/procesar_pago" method="POST">
+                                                <script src="https://www.mercadopago.com.mx/integrations/v1/web-payment-checkout.js" data-preference-id="<?php echo $preference->id; ?>">
+                                                </script>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -148,32 +130,24 @@ $fecha = date('d') . ' de ' . $ADMIN->MESES((int) date('m')) . ' de ' . date('Y'
                     <div class="order-details">
                         <h5 class="order-details__title">Tu pedido</h5>
                         <div class="order-details__item" id="table_carrito">
-                            <div class="single-item">
-                                <div class="single-item__thumb">
-                                    <img src="images/cart/1.png" alt="ordered item">
-                                </div>
-                                <div class="single-item__content">
-                                    <a href="#">Santa fe jacket for men</a>
-                                    <span class="price">$128</span>
-                                </div>
-                            </div>
+                            <div class="loader">Loading...</div>
                         </div>
                         <div class="order-details__count">
                             <div class="order-details__count__single">
                                 <h5>Total productos</h5>
-                                <span class="price" id="total_productos">$909.00</span>
+                                <span class="price" id="total_productos">$0.00</span>
                             </div>
                             <div class="order-details__count__single">
                                 <h5>Costo total</h5>
-                                <span class="price" id="total_compra">$9.00</span>
+                                <span class="price" id="total_compra">$0.00</span>
                             </div>
                             <div class="order-details__count__single">
                                 <h5>Envio</h5>
-                                <span class="price">150</span>
+                                <span class="price">$ 0.00</span>
                             </div>
                         </div>
                         <div class="ordre-details__total">
-                            <h5>Order total</h5>
+                            <h5>Orden total</h5>
                             <span class="price" id="total_envio"></span>
                         </div>
                     </div>
